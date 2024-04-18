@@ -1,5 +1,7 @@
 import { Grid, Typography } from "@mui/material"
 
+const boxWidth = 450;
+
 export const AuthLayout = ({ children, title }) => {
   return (
     <Grid
@@ -20,7 +22,7 @@ export const AuthLayout = ({ children, title }) => {
         className="box-shadow"
         xs={ 3 } // tamano de la caja/pantalla xs/sm/md/xl/
         sx={{
-          width: { sm: 450 },
+          width: { sm: boxWidth },
           backgroundColor: 'white',
           padding: 3,
           borderRadius: 2,

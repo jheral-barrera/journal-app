@@ -36,21 +36,12 @@ export const RegisterPage = () => {
 
           {/* Grid de botones */}
           <Grid container spacing={ 2 } sx={{ marginY: 1 }}>
-            <Grid item xs={ 12 } md={ 6 } textAlign='center'>
+            <Grid item xs={ 12 } md={ 12 } textAlign='center'>
               <Button 
                 variant="contained" 
                 fullWidth
               >
-                <Typography variant="button">Login</Typography>
-              </Button>
-            </Grid>
-            <Grid item xs={ 12 } md={ 6 }>
-              <Button 
-                variant="contained" 
-                fullWidth
-              >
-                <Google />
-                <Typography variant="button">Google</Typography>
+                <Typography variant="button">Create Account</Typography>
               </Button>
             </Grid>
           </Grid> 
@@ -68,7 +59,7 @@ export const RegisterPage = () => {
               <Link
                 component={ RouterLink }
                 color='inherit' 
-                to="/auth/register"
+                to="/auth/login"
                 >
                 log in here
               </Link>

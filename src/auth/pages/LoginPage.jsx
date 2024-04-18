@@ -57,7 +57,7 @@ export const LoginPage = () => {
             sx={{ marginTop: 1 }}
           >
             <Typography>
-              if you don't have an account, 
+              if you don't have an account,{' '} 
               <Link
                 component={ RouterLink }
                 color='inherit' 
