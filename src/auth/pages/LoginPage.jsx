@@ -29,7 +29,8 @@ export const LoginPage = () => {
 
           {/* Grid de botones */}
           <Grid container spacing={ 2 } sx={{ marginY: 1 }}>
-            <Grid item xs={ 12 } md={ 6 } textAlign='center'>
+
+            <Grid item xs={ 12 } md={ 6 } justifyContent='center' alignItems='center'>
               <Button 
                 variant="contained" 
                 fullWidth
@@ -37,6 +38,7 @@ export const LoginPage = () => {
                 <Typography variant="button">Login</Typography>
               </Button>
             </Grid>
+
             <Grid item xs={ 12 } md={ 6 }>
               <Button 
                 variant="contained" 
@@ -46,6 +48,7 @@ export const LoginPage = () => {
                 <Typography variant="button">Google</Typography>
               </Button>
             </Grid>
+
           </Grid> 
           {/* Grid de botones */}
 

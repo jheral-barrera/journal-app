@@ -17,10 +17,10 @@ export const NothingSelectedView = () => {
     >
 
         <Grid item xs={ 12 }>
-            <StarOutline sx={{ fontSize: 100, color: 'white'}} />
+            <StarOutline sx={{ fontSize: 50, color: 'white'}} />
         </Grid>
         <Grid item xs={ 12 }>
-            <Typography variant="h4" sx={{ color: 'white' }}>
+            <Typography variant="h5" sx={{ color: 'white' }}>
                 Select or create an entry
             </Typography>
         </Grid>
