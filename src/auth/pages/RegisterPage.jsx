@@ -16,8 +16,19 @@ const formData = {
   password: ''
 }
 
+const formsValidations = {
+  displayName: [ (value) => value.length >= 1, 'The name is required'],
+  email: [ (value) => value.includes('@'), 'The email must be contain an @'],
+  password: [ (value) => value.length <= 6, 'The password must be at least 6']
+}
+
 export const RegisterPage = () => {
-  const { displayName, email, password, handleInputForm } = useForm( {initialForm: formData} );
+  const { 
+    displayName, email, password, handleInputForm,
+    displayNameValid, emailValid, passwordValid, isFormValid
+  } = useForm({ initialForm: formData, formsValidations });
+
+  console.log(displayNameValid);
 
   const onSubmit = ( event ) => {
     event.preventDefault();
@@ -42,6 +53,8 @@ export const RegisterPage = () => {
               sx={{ marginTop: 2}}
               onChange={ handleInputForm }
               value={ displayName }
+              error={ displayNameValid }
+              helperText={ displayNameValid }
             />
             <TextField
               name={ formNames.email } 
