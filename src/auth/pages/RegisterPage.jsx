@@ -1,6 +1,12 @@
-import { Google } from "@mui/icons-material"
-import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
+import { startCreatingUserWithEmail } from "../../store/auth/thunks"
+
 import { Link as RouterLink } from 'react-router-dom'
+
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material"
+
+import { useMemo, useState } from "react"
+
 import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../../hooks"
 
@@ -19,20 +25,31 @@ const formData = {
 const formsValidations = {
   displayName: [ (value) => value.length >= 1, 'The name is required'],
   email: [ (value) => value.includes('@'), 'The email must be contain an @'],
-  password: [ (value) => value.length <= 6, 'The password must be at least 6']
+  password: [ (value) => value.length >= 6, 'The password must be at least 6']
 }
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
+
+  const { status, errorMessage } = useSelector( state => state.auth );
+
+  const isAutenthicating = useMemo( () => status === 'checking', [ status ] );
+
   const { 
-    displayName, email, password, handleInputForm,
+    displayName, email, password, handleInputForm, formState,
     displayNameValid, emailValid, passwordValid, isFormValid
   } = useForm({ initialForm: formData, formsValidations });
 
-  console.log(displayNameValid);
+  const [ formSubmitted, setFormSubmitted ] = useState(false);
 
   const onSubmit = ( event ) => {
     event.preventDefault();
-    console.log({ displayName, email, password })
+    setFormSubmitted(true);
+
+    if ( !isFormValid ) return;
+
+    dispatch( startCreatingUserWithEmail(formState) );
+
   }
 
   return (
@@ -53,8 +70,8 @@ export const RegisterPage = () => {
               sx={{ marginTop: 2}}
               onChange={ handleInputForm }
               value={ displayName }
-              error={ displayNameValid }
-              helperText={ displayNameValid }
+              error={ !!displayNameValid && formSubmitted }
+              helperText={ formSubmitted ? displayNameValid : null }
             />
             <TextField
               name={ formNames.email } 
@@ -65,6 +82,8 @@ export const RegisterPage = () => {
               sx={{ marginTop: 2}}
               onChange={ handleInputForm }
               value={ email }
+              error={ !!emailValid && formSubmitted }
+              helperText={ formSubmitted ? emailValid : null }
             />
             <TextField 
               name={ formNames.password }
@@ -75,14 +94,27 @@ export const RegisterPage = () => {
               sx={{ marginTop: 2}}
               onChange={ handleInputForm }
               value={ password }
+              error={ !!passwordValid && formSubmitted }
+              helperText={ formSubmitted ? passwordValid : null }
             />
           </Grid>
           {/* Grid de inputs */}
+
+          {/* Grid de alertas */}
+          <Grid 
+            item xs={ 12 } 
+            sx={{ marginTop: 3}}
+            display={ errorMessage ? '' : 'none' }
+          >
+            <Alert severity="error">{ errorMessage }</Alert>
+          </Grid>
+          {/* Grid de alertas */}
 
           {/* Grid de botones */}
           <Grid container spacing={ 2 } sx={{ marginY: 1 }}>
             <Grid item xs={ 12 } md={ 12 } textAlign='center'>
               <Button 
+                disabled={ isAutenthicating }
                 variant="contained" 
                 fullWidth
                 type="submit"
@@ -99,7 +131,7 @@ export const RegisterPage = () => {
             direction='row'
             justifyContent='center'
             sx={{ marginTop: 1 }}
-          >
+          >const isAutenthicating = useMemo( () => status === 'checking', [ status ] );
             <Typography>
               if you don't have an account,{' '} 
               <Link
