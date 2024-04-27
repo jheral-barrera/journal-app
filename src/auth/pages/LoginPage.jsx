@@ -2,12 +2,12 @@ import { useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link as RouterLink } from 'react-router-dom'
 import { Google } from "@mui/icons-material"
-import { Button, Grid, Link, TextField, Typography } from "@mui/material"
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material"
 
 import { AuthLayout } from "../layout/AuthLayout"
 
 import { useForm } from '../../hooks'
-import { checkingAuthentication, startGoogleSignIn } from "../../store/auth"
+import { startGoogleSignIn, startLoginWithEmail } from "../../store/auth"
 
 const formNames = {
   email: 'email',
@@ -22,7 +22,7 @@ const formData = {
 export const LoginPage = () => {
   // obtenemos el status(autenticado, no autenticado, chequeando)
   // almacenado en el stado del redux auth
-  const { status } = useSelector( state => state.auth );
+  const { status, errorMessage } = useSelector( state => state.auth );
 
   // creamos el dispatch para accionar las funciones de authSlice o thunks
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const LoginPage = () => {
 
   const onSubmit = ( event ) => {
     event.preventDefault();
-    dispatch( checkingAuthentication() );
+    dispatch( startLoginWithEmail({ email, password }));
   }
   
   // funcion para comenzar con la authenticacion por google
@@ -74,6 +74,16 @@ export const LoginPage = () => {
             />
           </Grid>
           {/* Grid de inputs */}
+
+          {/* Grid de alertas */}
+          <Grid 
+            item xs={ 12 } 
+            sx={{ marginTop: 2 }}
+            display={ errorMessage ? '' : 'none'}
+          >
+            <Alert severity="error">{ errorMessage }</Alert>
+          </Grid>
+          {/* Grid de alertas */}
 
           {/* Grid de botones */}
           <Grid container spacing={ 2 } sx={{ marginY: 1 }}>

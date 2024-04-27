@@ -103,7 +103,7 @@ export const RegisterPage = () => {
           {/* Grid de alertas */}
           <Grid 
             item xs={ 12 } 
-            sx={{ marginTop: 3}}
+            sx={{ marginTop: 2 }}
             display={ errorMessage ? '' : 'none' }
           >
             <Alert severity="error">{ errorMessage }</Alert>
@@ -131,7 +131,7 @@ export const RegisterPage = () => {
             direction='row'
             justifyContent='center'
             sx={{ marginTop: 1 }}
-          >const isAutenthicating = useMemo( () => status === 'checking', [ status ] );
+          >
             <Typography>
               if you don't have an account,{' '} 
               <Link

@@ -1,5 +1,5 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
-import { FirebaseAuth } from "./config";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { FirebaseApp, FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -33,8 +33,8 @@ export const signInWithGoogle = async () => {
 
 export const registerUserWithEmail = async ({ displayName, email, password }) => {
     try {
-        const res = await createUserWithEmailAndPassword( FirebaseAuth, email, password );
-        const { uid, photoURL } = res.user;
+        const result = await createUserWithEmailAndPassword( FirebaseAuth, email, password );
+        const { uid, photoURL } = result.user;
 
         // Actualizar el nombre del usuario 
         await updateProfile( FirebaseAuth.currentUser, { displayName } );
@@ -57,5 +57,37 @@ export const registerUserWithEmail = async ({ displayName, email, password }) =>
             errorMessage
         }
     }
+}
+
+export const loginWithEmail = async ({ email, password }) => {
+    try {
+        // * SOLUCION IMPLEMENTADA POR MI - ESTARA BUENO? NI IDEA
+        // const auth = getAuth( FirebaseApp );
+        // const { displayName, email, photoURL, uid } = auth.currentUser;
+        // console.log(auth);
+        // console.log(auth.currentUser)
+        
+        const result = await signInWithEmailAndPassword( FirebaseAuth, email, password );
+        const { displayName, photoURL, uid } = result.user;
+
+        return {
+            authResult: true,
+            displayName,
+            email,
+            photoURL,
+            uid 
+        }
+
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        return {
+            authResult: false,
+            errorCode,
+            errorMessage
+        }
+    }
+
 }
 
