@@ -55,7 +55,9 @@ export const RegisterPage = () => {
   return (
     <AuthLayout title='Register'>
 
-      <form onSubmit={ onSubmit }>
+      <form 
+        onSubmit={ onSubmit }
+      >
 
         <Grid container>
 

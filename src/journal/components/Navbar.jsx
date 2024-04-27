@@ -1,7 +1,15 @@
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material"
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material"
+import { useDispatch } from "react-redux"
+import { startLogoutFirebase } from "../../store/auth/thunks";
 
 export const Navbar = ({ drawerWidth }) => {
+    const dispatch = useDispatch();
+
+    const onLogout = () => {
+        dispatch( startLogoutFirebase() );
+    }
+
   return (
     <AppBar 
         position="fixed"
@@ -27,7 +35,7 @@ export const Navbar = ({ drawerWidth }) => {
             >
                 <Typography variant='h6' component='div' noWrap>Journal App</Typography>
 
-                <IconButton color="inherit">
+                <IconButton color="inherit" onClick={ onLogout } >
                     <LogoutOutlined />
                 </IconButton>
 
