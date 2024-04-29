@@ -21,7 +21,14 @@ export const journalSlice = createSlice({
             state.isSaving = false;
         },
         updateNote: ( state, { payload } ) => {
+            state.isSaving = false;
+            state.notes = state.notes.map( note => {
+                if ( note.id === payload.note.id ) return payload.note;
 
+                return { ...note }
+            } )
+
+            // todo: mensaje de actualizacion
         },
         deleteNote: ( state, { payload } ) => {
 
@@ -34,6 +41,7 @@ export const journalSlice = createSlice({
         },
         setSaving: ( state, { payload } ) => {
             state.isSaving = true;
+            // todo: mensaje de error
         },
         savingNewNote: ( state ) => {
             state.isSaving = true;
