@@ -3,19 +3,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../store/auth";
 import { FirebaseAuth } from "../firebase/config";
+import { startGetNotes } from "../store/journal/thunks";
 
 export const useCheckAuth = () => {
     const { status } = useSelector( state => state.auth );
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
       // * mantener el estado de la autenticacion
     useEffect(() => {
         onAuthStateChanged( FirebaseAuth, async ( user ) => {
-        if ( !user ) return dispath( logout()  );
+          if ( !user ) return dispatch( logout()  );
 
-        const { uid, displayName, email, photoURL } = user;
+          const { uid, displayName, email, photoURL } = user;
 
-        dispath( login({ uid, displayName, email, photoURL }) );
+          dispatch( login({ uid, displayName, email, photoURL }) );
+          dispatch( startGetNotes() );
         } );
     }, []);
 
