@@ -28,20 +28,21 @@ export const journalSlice = createSlice({
                 return { ...note }
             } )
 
-            // todo: mensaje de actualizacion
+            state.messageSaved = `Nota actualizada correctamente :)`;
         },
         deleteNote: ( state, { payload } ) => {
 
         },
         setActiveNote: ( state, { payload } ) => {
             state.active = payload;
+            state.messageSaved = '';
         },
         setNotes: ( state, { payload } ) => {
             state.notes = payload.notes;
         },
-        setSaving: ( state, { payload } ) => {
+        setSaving: ( state ) => {
             state.isSaving = true;
-            // todo: mensaje de error
+            state.messageSaved = '';
         },
         savingNewNote: ( state ) => {
             state.isSaving = true;
