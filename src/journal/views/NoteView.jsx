@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { SaveOutlined } from '@mui/icons-material'
-import { Grid, Typography, Button, TextField } from '@mui/material'
+import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { Grid, Typography, Button, TextField, IconButton } from '@mui/material'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.css'
 
 import { ImageGallery } from '../components'
 
 import { useForm } from '../../hooks'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { setActiveNote, startUpdateNotes } from '../../store/journal'
 
 export const NoteView = () => {
@@ -19,8 +19,10 @@ export const NoteView = () => {
     const dateString = useMemo( () => {
         const dateFormat = new Date( date );
 
-        return dateFormat.toUTCString();
+        return dateFormat.toDateString();
     }, [ date ] )
+
+    const fileInputRef = useRef();
 
     useEffect( () => {
         dispatch( setActiveNote( formState ) )
@@ -36,11 +38,33 @@ export const NoteView = () => {
         dispatch( startUpdateNotes() );
     }
 
+    const onInputFileChanged = ({ target }) => {
+        if ( target.files === 0 ) return;
+        console.log('subiendo los archivos');
+    }
+
   return (
     <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ marginBottom: 1 }}>
         <Grid item>
             <Typography fontSize={ 39 } fontWeight='light'>{ dateString }</Typography>
         </Grid>
+
+
+        <input
+            ref={ fileInputRef }
+            type='file'
+            multiple
+            onChange={ onInputFileChanged }
+            style={{ display: 'none' }}
+        />
+ 
+        <IconButton
+            color='primary'
+            disabled={ isSaving }   
+            onClick={ () => fileInputRef.current.click() }
+        >
+            <UploadOutlined />
+        </IconButton>
 
         <Grid item>
             <Button disabled={ isSaving } onClick={ onSaveNote } color='primary' sx={{ padding: 2 }}>
