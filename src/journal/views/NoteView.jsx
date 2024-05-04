@@ -8,7 +8,7 @@ import { ImageGallery } from '../components'
 
 import { useForm } from '../../hooks'
 import { useEffect, useMemo, useRef } from 'react'
-import { setActiveNote, startUpdateNotes } from '../../store/journal'
+import { setActiveNote, startUpdateNotes, startUploadingFiles } from '../../store/journal'
 
 export const NoteView = () => {
     const dispatch = useDispatch();
@@ -40,7 +40,8 @@ export const NoteView = () => {
 
     const onInputFileChanged = ({ target }) => {
         if ( target.files === 0 ) return;
-        console.log('subiendo los archivos');
+        console.log( target.files );
+        dispatch( startUploadingFiles( target.files ) );
     }
 
   return (
