@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
-import { Grid, Typography, Button, TextField, IconButton } from '@mui/material'
+import { DeleteOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { Grid, Typography, Button, TextField } from '@mui/material'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.css'
 
@@ -8,7 +8,7 @@ import { ImageGallery } from '../components'
 
 import { useForm } from '../../hooks'
 import { useEffect, useMemo, useRef } from 'react'
-import { setActiveNote, startUpdateNotes, startUploadingFiles } from '../../store/journal'
+import { setActiveNote, startUpdateNotes, startUploadingFiles, startDeletingNote } from '../../store/journal'
 
 export const NoteView = () => {
     const dispatch = useDispatch();
@@ -42,6 +42,10 @@ export const NoteView = () => {
         if ( target.files === 0 ) return;
         dispatch( startUploadingFiles( target.files ) );
     }
+    
+    const onDelete = () => {
+        dispatch( startDeletingNote() );
+    }
 
   return (
     <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ marginBottom: 1 }}>
@@ -58,6 +62,16 @@ export const NoteView = () => {
             style={{ display: 'none' }}
         />
 
+        <Grid item >
+            <Button
+                onClick={ onDelete }
+                sx={{ padding: 2 }}
+                color='primary'
+            >
+                <DeleteOutline sx={{ fontSize: 30, marginRight: 1 }} />
+                Delete
+            </Button>
+        </Grid>
         <Grid item>
             <Button disabled={ isSaving } onClick={ () => fileInputRef.current.click() } color='primary' sx={{ padding: 2 }}>
                 <UploadOutlined sx={{ fontSize: 30, marginRight: 1 }} />
