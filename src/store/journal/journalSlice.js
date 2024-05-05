@@ -7,13 +7,6 @@ export const journalSlice = createSlice({
         messageSaved: '',
         notes: [],
         active: null,
-        // active: { 
-        //     id: '123', <-- id dado por firebase
-        //     title: '',
-        //     body: '',
-        //     date: '12/12/24',
-        //     imageUrls: [] <-- https://foto1.jpg, https://foto2.jpg
-        // }
     },
     reducers: {
         addNewEmptyNote: ( state, { payload } ) => {
@@ -46,8 +39,11 @@ export const journalSlice = createSlice({
         },
         savingNewNote: ( state ) => {
             state.isSaving = true;
+        },
+        setPhotosToActiveNote: ( state, { payload } ) => {
+            state.active.imagesUrls = [ ...state.active.imagesUrls, ...payload ];
+            state.isSaving = false;
         }
-
     }
 });
 
@@ -60,5 +56,6 @@ export const {
     setActiveNote,
     setNotes,
     setSaving,
-    savingNewNote
+    savingNewNote,
+    setPhotosToActiveNote
 } = journalSlice.actions;

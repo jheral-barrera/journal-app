@@ -40,6 +40,7 @@ export const Sidebar = ({ drawerWidth }) => {
                 title={note.title} 
                 body={note.body}
                 date={note.date}
+                imagesUrls={note.imagesUrls}
                 // {...note}
               />
             ))

@@ -1,6 +1,6 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../../firebase/config";
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes, setSaving, updateNote } from "./journalSlice";
+import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, setSaving, updateNote } from "./journalSlice";
 import { getNotes } from "../../helpers";
 import { fileUpload } from "../../helpers/fileUpload";
 
@@ -62,9 +62,16 @@ export const startUploadingFiles = ( files = [] ) => {
     return async ( dispatch, getState ) => {
         dispatch( setSaving() );
 
-        await fileUpload( files[0] );
+        // await fileUpload( files[0] );
+        // Se guardara todas las promesas de subida de imagenes en una lista
+        const fileUploadPromises = [];
+        for ( const file of files ) {
+            fileUploadPromises.push( fileUpload(file) );
+        }
 
-        // console.log( files );
+        const photosUrls = await Promise.all( fileUploadPromises );
+        
+        dispatch( setPhotosToActiveNote( photosUrls ) );
     }
 }
 

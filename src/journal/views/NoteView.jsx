@@ -40,7 +40,6 @@ export const NoteView = () => {
 
     const onInputFileChanged = ({ target }) => {
         if ( target.files === 0 ) return;
-        console.log( target.files );
         dispatch( startUploadingFiles( target.files ) );
     }
 
@@ -58,15 +57,13 @@ export const NoteView = () => {
             onChange={ onInputFileChanged }
             style={{ display: 'none' }}
         />
- 
-        <IconButton
-            color='primary'
-            disabled={ isSaving }   
-            onClick={ () => fileInputRef.current.click() }
-        >
-            <UploadOutlined />
-        </IconButton>
 
+        <Grid item>
+            <Button disabled={ isSaving } onClick={ () => fileInputRef.current.click() } color='primary' sx={{ padding: 2 }}>
+                <UploadOutlined sx={{ fontSize: 30, marginRight: 1 }} />
+                Upload Image
+            </Button>
+        </Grid>
         <Grid item>
             <Button disabled={ isSaving } onClick={ onSaveNote } color='primary' sx={{ padding: 2 }}>
                 <SaveOutlined sx={{ fontSize: 30, marginRight: 1 }} />
@@ -101,7 +98,7 @@ export const NoteView = () => {
             />
 
             {/* Galeria de imagenes subidas */}
-            <ImageGallery />
+            <ImageGallery images={ note?.imagesUrls } />
         </Grid>
     </Grid>
   )

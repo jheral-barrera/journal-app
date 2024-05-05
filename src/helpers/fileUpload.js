@@ -15,10 +15,8 @@ export const fileUpload = async ( file = [] ) => {
         })
 
         if ( !response.ok ) throw new Error('file could not be loaded :(')
-        console.log( response );
             
         const cloudResponse = await response.json();
-        console.log( cloudResponse );
             
         return cloudResponse.secure_url;
             
