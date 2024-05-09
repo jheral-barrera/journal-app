@@ -2,9 +2,9 @@ import { v2 as cloudinary } from "cloudinary"
 import { fileUpload } from "../../src/helpers/fileUpload"
 
 cloudinary.config({
-    cloud_name: 'ddsl6wkqs',
-    api_key: '449547197525487',
-    api_secret: 'ywdJzhSkRXXj_R5o0ebCyYsZKQ4',
+    cloud_name: import.meta.env.VITE_APP_CLOUD_NAME,
+    api_key: import.meta.env.VITE_APP_API_KEY,
+    api_secret: import.meta.env.VITE_APP_API_SECRET,
     secure: true
 })
 

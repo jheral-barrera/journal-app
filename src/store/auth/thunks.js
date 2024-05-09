@@ -14,6 +14,7 @@ export const startGoogleSignIn = () => {
 
         const result = await signInWithGoogle();
 
+        // console.log( result );
         if ( !result.authResult ) return dispatch( logout( result.errorMessage ) );
         
         dispatch( login( result ) );
@@ -25,7 +26,7 @@ export const startCreatingUserWithEmail = ({ displayName, email, password }) => 
         dispatch( checkingCredentials() );
 
         const result = await registerUserWithEmail({ displayName, email, password });
-    
+        
         if ( !result.authResult ) return dispatch( logout( result.errorMessage ))
 
         dispatch( login( result ) );

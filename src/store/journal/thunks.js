@@ -79,10 +79,21 @@ export const startUploadingFiles = ( files = [] ) => {
 export const startDeletingNote = () => {
     return async ( dispatch, getState ) => {
         const { uid } = getState().auth;
-        const { active:note } = getState().journal;
+        const { active:note, imagesUrls } = getState().journal;
 
         const documentRef = doc( FirebaseDB, `${uid}/journal/notes/${note.id}`);
         await deleteDoc( documentRef );
+
+        // Eliminacion de las imagenes subidas a la nube asociadas a la nota
+        // const imagesDeletePromises = [];
+
+        // for ( imageUrl of imagesUrls ) {
+        //     const segments = imageUrl.split( '/' );
+        //     const imageId = segments[ segments.length - 1 ].replace('.png', '');
+        //     imagesDeletePromises.push( deleteImagesCloudinary( imageId ) );
+        // }
+
+        // await Promise.all( imagesDeletePromises );
 
         dispatch( deleteNoteById( note.id ));
     }
