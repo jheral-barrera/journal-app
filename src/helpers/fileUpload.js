@@ -1,8 +1,12 @@
+const testEnvironment = true;
 
 export const fileUpload = async ( file = [] ) => {
+    if ( testEnvironment && !file ) return null
     if ( !file ) throw new Error('There is no file to upload :(') ;
 
-    const cloudUrl = 'https://api.cloudinary.com/v1_1/ddsl6wkqs/upload';
+    const cloudName = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+
+    const cloudUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
     const formData = new FormData();
     formData.append('upload_preset', 'journal-react');
@@ -22,6 +26,7 @@ export const fileUpload = async ( file = [] ) => {
             
     } catch ( error ) {
         console.log( error );
+        if ( testEnvironment ) return null;
         throw new Error( error.message );
     }
 }
