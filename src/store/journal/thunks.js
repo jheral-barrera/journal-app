@@ -1,8 +1,7 @@
 import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { FirebaseDB } from "../../firebase/config";
 import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, setSaving, updateNote } from "./journalSlice";
-import { getNotes } from "../../helpers";
-import { fileUpload } from "../../helpers/fileUpload";
+import { getNotes, fileUpload, getImagesIds, fileDelete } from "../../helpers";
 
 export const startNewNote = () => {
     return async ( dispatch, getState ) => {
@@ -12,8 +11,8 @@ export const startNewNote = () => {
 
 
         const newNote = {
-            title: '',
-            body: '',
+            title: 'Title',
+            body: 'Description',
             imagesUrls: [],
             date: new Date().getTime()
         }
@@ -79,21 +78,18 @@ export const startUploadingFiles = ( files = [] ) => {
 export const startDeletingNote = () => {
     return async ( dispatch, getState ) => {
         const { uid } = getState().auth;
-        const { active:note, imagesUrls } = getState().journal;
+        const { active:note } = getState().journal;
+
+        const fileDeletePromises = [];
+        const imagesId = getImagesIds( note.imagesUrls );
+        for ( let imageId of imagesId ) {
+            fileDeletePromises.push( fileDelete( imageId ) );
+        }
+
+        await Promise.all( fileDeletePromises );
 
         const documentRef = doc( FirebaseDB, `${uid}/journal/notes/${note.id}`);
         await deleteDoc( documentRef );
-
-        // Eliminacion de las imagenes subidas a la nube asociadas a la nota
-        // const imagesDeletePromises = [];
-
-        // for ( imageUrl of imagesUrls ) {
-        //     const segments = imageUrl.split( '/' );
-        //     const imageId = segments[ segments.length - 1 ].replace('.png', '');
-        //     imagesDeletePromises.push( deleteImagesCloudinary( imageId ) );
-        // }
-
-        // await Promise.all( imagesDeletePromises );
 
         dispatch( deleteNoteById( note.id ));
     }

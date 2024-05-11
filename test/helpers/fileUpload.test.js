@@ -1,10 +1,11 @@
 import { v2 as cloudinary } from "cloudinary"
 import { fileUpload } from "../../src/helpers/fileUpload"
+import 'dotenv/config'
 
 cloudinary.config({
-    cloud_name: import.meta.env.VITE_APP_CLOUD_NAME,
-    api_key: import.meta.env.VITE_APP_API_KEY,
-    api_secret: import.meta.env.VITE_APP_API_SECRET,
+    cloud_name: import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME,
+    api_key: import.meta.env.VITE_APP_CLOUDINARY_API_KEY,
+    api_secret: import.meta.env.VITE_APP_CLOUDINARY_API_SECRET,
     secure: true
 })
 

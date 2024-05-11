@@ -57,6 +57,7 @@ export const NoteView = () => {
         <input
             ref={ fileInputRef }
             type='file'
+            accept='image/jpeg, image/png'
             multiple
             onChange={ onInputFileChanged }
             style={{ display: 'none' }}
@@ -67,6 +68,7 @@ export const NoteView = () => {
                 onClick={ onDelete }
                 sx={{ padding: 2 }}
                 color='primary'
+                disabled={ isSaving }
             >
                 <DeleteOutline sx={{ fontSize: 30, marginRight: 1 }} />
                 Delete
