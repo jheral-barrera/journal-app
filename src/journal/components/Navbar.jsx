@@ -3,7 +3,7 @@ import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material"
 import { useDispatch } from "react-redux"
 import { startLogoutFirebase } from "../../store/auth/thunks";
 
-export const Navbar = ({ drawerWidth }) => {
+export const Navbar = ({ drawerWidth, handleOpenSidebar }) => {
     const dispatch = useDispatch();
 
     const onLogout = () => {
@@ -23,6 +23,7 @@ export const Navbar = ({ drawerWidth }) => {
                 color="inherit"
                 edge="start"
                 sx={{ marginRight: 2, display: { sm: 'none'}}}
+                onClick={ handleOpenSidebar }
             >
                 <MenuOutlined />
             </IconButton>

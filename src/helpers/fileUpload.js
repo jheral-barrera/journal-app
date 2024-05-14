@@ -1,10 +1,11 @@
-const testEnvironment = true;
+const TESTENVIRONMENT = true;
 
 export const fileUpload = async ( file = [] ) => {
-    if ( testEnvironment && !file ) return null
+    if ( TESTENVIRONMENT && !file ) return null
     if ( !file ) throw new Error('There is no file to upload :(') ;
 
-    const cloudName = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+    // const cloudName = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+    const cloudName = process.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
 
     const cloudUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
@@ -26,7 +27,7 @@ export const fileUpload = async ( file = [] ) => {
             
     } catch ( error ) {
         console.log( error );
-        if ( testEnvironment ) return null;
+        if ( TESTENVIRONMENT ) return null;
         throw new Error( error.message );
     }
 }
