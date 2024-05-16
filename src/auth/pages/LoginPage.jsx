@@ -35,6 +35,7 @@ export const LoginPage = () => {
 
   const onSubmit = ( event ) => {
     event.preventDefault();
+    console.log( email, password )
     dispatch( startLoginWithEmail({ email, password }));
   }
   
@@ -46,7 +47,8 @@ export const LoginPage = () => {
   return (
     <AuthLayout title='Login'>
 
-      <form 
+      <form
+        aria-label="loginForm"
         onSubmit={ onSubmit }
       >
 
@@ -66,6 +68,9 @@ export const LoginPage = () => {
               />
             <TextField 
               name={ formNames.password }
+              inputProps={{
+                'data-testid': 'password'
+              }}
               label="Password" 
               type="password" 
               placeholder="Password" 
@@ -92,6 +97,7 @@ export const LoginPage = () => {
 
             <Grid item xs={ 12 } md={ 6 } justifyContent='center' alignItems='center'>
               <Button 
+                aria-label="loginButton"
                 disabled={ isAutenthicating }
                 variant="contained" 
                 fullWidth
@@ -103,6 +109,7 @@ export const LoginPage = () => {
 
             <Grid item xs={ 12 } md={ 6 }>
               <Button 
+                aria-label="googleButton"
                 disabled={ isAutenthicating }
                 variant="contained" 
                 fullWidth
