@@ -62,6 +62,8 @@ export const startUploadingFiles = ( files = [] ) => {
     return async ( dispatch, getState ) => {
         dispatch( setSaving() );
 
+        const { active:note } = getState().journal;
+
         // await fileUpload( files[0] );
         // Se guardara todas las promesas de subida de imagenes en una lista
         const fileUploadPromises = [];
@@ -72,6 +74,7 @@ export const startUploadingFiles = ( files = [] ) => {
         const photosUrls = await Promise.all( fileUploadPromises );
         
         dispatch( setPhotosToActiveNote( photosUrls ) );
+        dispatch( updateNote({ note }));
     }
 }
 

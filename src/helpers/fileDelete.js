@@ -1,5 +1,6 @@
 
 export const getImagesIds = ( imagesUrls = [] ) => {
+    if (!imagesUrls.length) return [];
     const imagesDeletedIds = [];
 
     for ( let imageUrl of imagesUrls ) {
