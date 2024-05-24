@@ -13,3 +13,5 @@ Autenticación de usuarios
 Gestión de datos en la base de datos
 Almacenamiento y visualización de imágenes
 Gestión CRUD de notas
+
+proyecto: https://journal-app-2bbd9.web.app
